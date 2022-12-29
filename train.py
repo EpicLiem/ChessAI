@@ -3,6 +3,7 @@ import logging
 import os
 import tensorflow as tf
 
+from chess.pgn import Game
 from multiprocessing import Process
 from RLC.real_chess.agent import Agent
 from RLC.real_chess.agent import RandomAgent
@@ -45,6 +46,9 @@ if __name__ == '__main__':
         logging.info("New model created that is trained to capture.")
         R.agent.model.save('agent_model.h5')
         logging.info("model saved as agent_model.h5")
+        pgn = Game.from_board(R.env.board)
+        with open(f"rlc_pgn({i})", "w") as log:
+            log.write(str(pgn))
 
     for i in range(5, t):
         p = Process(target=train, args=(i,))
