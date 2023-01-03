@@ -5,10 +5,10 @@ import tensorflow as tf
 
 from chess.pgn import Game
 from multiprocessing import Process
-from RLC.real_chess.agent import Agent
-from RLC.real_chess.agent import RandomAgent
-from RLC.real_chess.environment import Board
-from RLC.real_chess.learn import TD_search
+from ChessAI.agent import Agent
+from ChessAI.agent import RandomAgent
+from ChessAI.environment import Board
+from ChessAI.learn import TD_search
 from keras.models import load_model
 
 tf.autograph.set_verbosity(0)
