@@ -130,7 +130,7 @@ class TD_search(object):
             if not (self.env.board.turn and max_move not in tree.children.keys()) or not k > start_mcts_after:
                 tree.children[max_move] = Node(gamma=0.9, parent=tree)
 
-            episode_end, reward = self.env.step(max_move)
+            episode_end, reward = self.env.step(max_move, end=True)
 
             tree = tree.children[max_move]
             tree.parent = None

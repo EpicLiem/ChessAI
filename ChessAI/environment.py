@@ -68,7 +68,7 @@ class Board(object):
         self.layer_board = self._prev_layer_board.copy()
         self._prev_layer_board = None
 
-    def step(self, action, test=True):
+    def step(self, action, test=True, end=False):
         """
         Run a step
         Args:
@@ -88,15 +88,24 @@ class Board(object):
         if result == "*":
             reward = 0
             episode_end = False
+            # if end == True:
+            #     print("turn concluded")
+            #     print(self.board)
         elif result == "1-0":
             reward = 1
             episode_end = True
+            if end == True:
+                print("black checkmated")
         elif result == "0-1":
             reward = -1
             episode_end = True
+            if end == True:
+                print("white checkmated")
         elif result == "1/2-1/2":
             reward = 0
             episode_end = True
+            if end == True:
+                print("king stalemated")
         reward += auxiliary_reward
 
         return episode_end, reward
