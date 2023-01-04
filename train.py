@@ -49,7 +49,5 @@ if __name__ == '__main__':
         with open(f"rlc_pgn(first)", "w") as log:
             log.write(str(pgn))
 
-    for i in range(5, t):
-        p = Process(target=train, args=(i,))
-        p.start()
-        p.join()
+    for i in range(t):
+        train(i)
