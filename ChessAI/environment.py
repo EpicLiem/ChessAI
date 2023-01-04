@@ -96,16 +96,19 @@ class Board(object):
             episode_end = True
             if end == True:
                 print("black checkmated")
+                print(self.board.FEN())
         elif result == "0-1":
             reward = -1
             episode_end = True
             if end == True:
                 print("white checkmated")
+                print(self.board.FEN())
         elif result == "1/2-1/2":
             reward = 0
             episode_end = True
             if end == True:
                 print("king stalemated")
+                print(self.board.FEN())
         reward += auxiliary_reward
 
         return episode_end, reward

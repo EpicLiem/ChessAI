@@ -46,7 +46,7 @@ if __name__ == '__main__':
         R.agent.model.save('agent_model.h5')
         logging.info("model saved as agent_model.h5")
         pgn = Game.from_board(R.env.board)
-        with open(f"rlc_pgn({i})", "w") as log:
+        with open(f"rlc_pgn(first)", "w") as log:
             log.write(str(pgn))
 
     for i in range(5, t):
