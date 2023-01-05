@@ -19,15 +19,15 @@ logging.basicConfig(filename="training.log", level=logging.INFO)
 
 
 def train(i):
-    agent = Agent(network='big')
-    gc.collect()
-    board = Board(agent)
-    agent.model = load_model('agent_model.h5')
-    R = TD_search(env=board, agent=agent, memsize=12000)
-    finalboard = R.learn(iters=25, maxiter=120 - (t * 2), c=5)
-    print(finalboard)
+    gagent = GreedyAgent()
+    board = Board(gagent, capture_reward_factor=0.1)
+    R = TD_search(env=board, agent=agent, memsize=12000, batch_size=512)
+    learining = R.learn(iters=100, c=5)
     R.agent.model.save('agent_model.h5')
-    logging.info(f"{i} model variations done \n {finalboard} \n \n")
+    logging.info(f"variation {i} completed")
+    pgn = Game.from_board(R.env.board)
+    with open(f"rlc_pgn({i})", "w") as log:
+        log.write(str(pgn))
 
 
 if __name__ == '__main__':
@@ -46,7 +46,7 @@ if __name__ == '__main__':
         R.agent.model.save('agent_model.h5')
         logging.info("model saved as agent_model.h5")
         pgn = Game.from_board(R.env.board)
-        with open(f"rlc_pgn(first)", "w") as log:
+        with open("rlc_pgn(first)", "w") as log:
             log.write(str(pgn))
 
     for i in range(t):
