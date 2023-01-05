@@ -19,6 +19,9 @@ logging.basicConfig(filename="training.log", level=logging.INFO)
 
 
 def train(i):
+    agent = Agent(network='big')
+    agent.model = load_model('agent_model.h5')
+    agent.fix_model()
     gagent = GreedyAgent()
     board = Board(gagent, capture_reward_factor=0.1)
     R = TD_search(env=board, agent=agent, memsize=12000, batch_size=512)
