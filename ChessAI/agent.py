@@ -2,6 +2,8 @@ from keras.layers import Input, Dense, Flatten, Concatenate, Conv2D, Dropout
 from keras.losses import mean_squared_error
 from keras.models import Model, clone_model, load_model
 from keras.optimizers import SGD, Adam, RMSprop
+import chess
+import chess.engine
 import numpy as np
 
 
@@ -37,6 +39,23 @@ class GreedyAgent(object):
             added_noise = np.random.randn() / 1e3
         return board_value + added_noise
 
+
+
+class EngineWrapperAgent(object):
+    def __init__(self, color=chess.BLACK):
+        engine = chess.engine.SimpleEngine.popen_uci("/usr/local/bin/stockfish")
+        self.engine = engine
+        self.color=color
+    def predict(self, board):
+        info = self.engine.analyse(board, chess.engine.Limit(depth=2))
+        # print(info['score'].pov(self.color))
+        try:
+            score = int(info['score'].pov(self.color).score())
+        except:
+            score = 0
+        if type(score) != int:
+            score = 0
+        return float(score) / 10000
 
 class Agent(object):
 

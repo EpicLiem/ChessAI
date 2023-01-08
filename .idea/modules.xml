@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/ChessAI.iml" filepath="$PROJECT_DIR$/.idea/ChessAI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jtermai/.idea/jtermai.iml" filepath="$PROJECT_DIR$/../jtermai/.idea/jtermai.iml" />
     </modules>
   </component>
 </project>

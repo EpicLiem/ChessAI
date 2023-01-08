@@ -106,7 +106,7 @@ class Node(object):
                         sucval = reward + self.gamma * np.squeeze(
                             model.predict(np.expand_dims(env.layer_board, axis=0), verbose=0))
                     else:
-                        sucval = np.squeeze(env.opposing_agent.predict(np.expand_dims(env.layer_board, axis=0)))
+                        sucval = np.squeeze(env.opposing_agent.predict(env.board))
                     successor_values.append(sucval)
                     env.board.pop()
                     env.init_layer_board()

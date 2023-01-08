@@ -35,30 +35,37 @@ class Board(object):
         self.opposing_agent = opposing_agent
 
     def init_layer_board(self):
+        # """
+        # Initalize the numerical representation of the environment
+        # Returns:
+        #
+        # """
+        # self.layer_board = np.zeros(shape=(8, 8, 8))
+        # for i in range(64):
+        #     row = i // 8
+        #     col = i % 8
+        #     piece = self.board.piece_at(i)
+        #     if piece == None:
+        #         continue
+        #     elif piece.symbol().isupper():
+        #         sign = 1
+        #     else:
+        #         sign = -1
+        #     layer = mapper[piece.symbol()]
+        #     self.layer_board[layer, row, col] = sign
+        #     self.layer_board[6, :, :] = 1 / self.board.fullmove_number
+        # if self.board.turn:
+        #     self.layer_board[6, 0, :] = 1
+        # else:
+        #     self.layer_board[6, 0, :] = -1
+        # self.layer_board[7, :, :] = 1
         """
-        Initalize the numerical representation of the environment
-        Returns:
-
+        Sets LayerBoard to Bytes of FEN Representation
         """
-        self.layer_board = np.zeros(shape=(8, 8, 8))
-        for i in range(64):
-            row = i // 8
-            col = i % 8
-            piece = self.board.piece_at(i)
-            if piece == None:
-                continue
-            elif piece.symbol().isupper():
-                sign = 1
-            else:
-                sign = -1
-            layer = mapper[piece.symbol()]
-            self.layer_board[layer, row, col] = sign
-            self.layer_board[6, :, :] = 1 / self.board.fullmove_number
-        if self.board.turn:
-            self.layer_board[6, 0, :] = 1
-        else:
-            self.layer_board[6, 0, :] = -1
-        self.layer_board[7, :, :] = 1
+        fen = self.board.fen()
+        fenbytestring = fen.encode("utf-8")
+        fenbytearray = np.frombuffer(fenbytestring, dtype='uint8')
+        self.layer_board = fenbytearray
 
     def update_layer_board(self, move=None):
         self._prev_layer_board = self.layer_board.copy()
@@ -88,9 +95,9 @@ class Board(object):
         if result == "*":
             reward = 0
             episode_end = False
-            # if end == True:
-            #     print("turn concluded")
-            #     print(self.board)
+            if end == True:
+                print("turn concluded")
+                print(self.board)
         elif result == "1-0":
             reward = 1
             episode_end = True
